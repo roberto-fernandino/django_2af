@@ -16,8 +16,8 @@ def send_email(dest:str, dest_name:str, codigo_2af:str):
                         "Name": dest_name
                     }
                 ],
-                "Subject": f"{dest_name}Seu codigo de autenticação de dois fatores para login",
-                "TextPart": f"{dest_name} para logar copie este codigo  ( {codigo_2af} ) ",
+                "Subject": f"{dest_name} seu codigo de autenticação de dois fatores para login",
+                "TextPart": f"{dest_name} para logar utilize este codigo dentro dos parenteses ({codigo_2af})",
                 "CustomID": "AppGettingStartedTest"
             }
         ]
@@ -40,7 +40,7 @@ def send_email_boas_vindas(dest:str, dest_name:str, link:str):
                         "Name": dest_name
                     }
                 ],
-                "Subject": f"{dest_name} Seja bem vindo a nossa plataforma!",
+                "Subject": f"{dest_name} seja bem vindo a nossa plataforma!",
                 "TextPart": f"Para verificar sua conta clique nesete link {link}",
                 "CustomID": "AppGettingStartedTest"
             }

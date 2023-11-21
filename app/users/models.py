@@ -7,6 +7,8 @@ PermissionsMixin,
 )
 import uuid
 from django.utils.text import slugify
+import string
+import random
 
 
 # Create your models here.
@@ -18,7 +20,7 @@ class UsuarioManager(BaseUserManager):
         email,
         telefone,
         idade,
-        cadastro,
+        cadastro=datetime.now(),
         password=None,
     ):
         
@@ -41,6 +43,7 @@ class UsuarioManager(BaseUserManager):
             cadastro=cadastro,
         )
         user.set_password(password)
+        user.is_active = True
         user.save(using=self._db)
         return user
     
@@ -79,7 +82,7 @@ class UsuarioManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     
 class Usuario(AbstractBaseUser, PermissionsMixin):
     #Fields
@@ -96,13 +99,13 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_admin=models.BooleanField(default=False)
     is_staff=models.BooleanField(default=False)
 
-    # 2 auth
+    # verification (still tags)
     is_verified=models.BooleanField(default=False)
     
     objects = UsuarioManager()
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ["nome", "idade", "telefone"]
+    REQUIRED_FIELDS = ["nome", "idade", "telefone"]    
     
     
     def __str__(self):
@@ -115,9 +118,22 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return True
     
 
-class Code(models.Model):
-    useruario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    codigo = models.CharField(max_length=8)
+class Codigo(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    codigo = models.CharField(max_length=5, blank=True, null=False)
     
+    @staticmethod
+    def gerar_numero_e_letras_aleatorios(tamanho=5):
+        caracteres = string.ascii_letters + string.digits  # Contém letras maiúsculas, minúsculas e dígitos
+        resultado = ''.join(random.choice(caracteres) for _ in range(tamanho))
+        return resultado
+    
+    
+    def save(self, *args, **kwargs):
+        self.codigo = self.gerar_numero_e_letras_aleatorios(5)
+        super().save(*args, **kwargs)
+        
+    def __str__(self):
+        return f"{self.codigo}"
         
         

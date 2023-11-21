@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from .forms import UsuarioChangeForm, UsuarioCreationForm
-from .models import Usuario
+from .models import Usuario, Codigo
 
 # Register your models here.
 class UsuarioAdmin(UserAdmin):
@@ -17,7 +17,7 @@ class UsuarioAdmin(UserAdmin):
     
     fieldsets = (
         ("Informações Gerais", {"fields": ['email', 'nome', 'last_login']}),
-        ("informações Pessoas", {'fields': ["telefone", "idade", "uuid"]}),
+        ("informações Pessoas", {'fields': ["telefone", "idade", "uuid", "password"]}),
         ("Tags", {"fields": ['is_admin', "is_staff", "is_superuser", "is_verified"]}),
     )
     add_fieldsets = [
@@ -42,5 +42,9 @@ class UsuarioAdmin(UserAdmin):
     filter_horizontal = ['user_permissions']
     date_hierarchy = 'cadastro'
     
+
+class CodigoAdmin(admin.ModelAdmin):
+    list_display = ['usuario', 'codigo']
     
+admin.site.register(Codigo, CodigoAdmin)
 admin.site.register(Usuario, UsuarioAdmin)

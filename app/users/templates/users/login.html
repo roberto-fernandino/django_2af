@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2af</title>
+</head>
+<body>
+    {% if mensagem %}
+        {{mensagem}}
+    {% endif %}
+    <form action="{% url 'users:login_view' %}" method="post">
+        {% csrf_token %}
+        <label for="codigo">{{nome}} enter sent to your email to login:</label>
+        <input type="text" name="codigo">
+        <button type="submit">Logar</button>
+    </form>
+</body>
+</html>
