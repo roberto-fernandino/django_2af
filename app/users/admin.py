@@ -13,7 +13,7 @@ class UsuarioAdmin(UserAdmin):
     # Form no painel de admin para criar um usuário.
     add_form = UsuarioCreationForm
 
-    # Escolhe quais coisas serão mostradas na pagina admin.
+    # Escolhe quais atributos serão mostrados quando listados na pagina deste modelo no painel de admin.
     list_display = [
         "email",
         "telefone",
